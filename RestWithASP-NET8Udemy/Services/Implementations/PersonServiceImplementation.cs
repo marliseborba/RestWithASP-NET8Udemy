@@ -22,6 +22,7 @@ namespace RestWithASP_NET8Udemy.Services.Implementations
             for (int i = 0; i < 8; i++)
             {
                 Person person = MockPerson(i);
+                persons.Add(person);
             }
             return persons;
         }
