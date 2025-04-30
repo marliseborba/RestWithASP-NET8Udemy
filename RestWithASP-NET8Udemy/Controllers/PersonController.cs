@@ -5,7 +5,7 @@ using RestWithASP_NET8Udemy.Services;
 
 namespace RestWithASP_NET8Udemy.Controllers
 {
-    [ApiVersion("2.0")]
+    [ApiVersion("1.0")]
     [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
