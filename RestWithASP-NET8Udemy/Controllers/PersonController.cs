@@ -1,11 +1,13 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASP_NET8Udemy.Model;
 using RestWithASP_NET8Udemy.Services;
 
 namespace RestWithASP_NET8Udemy.Controllers
 {
+    [ApiVersion("2.0")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
 
