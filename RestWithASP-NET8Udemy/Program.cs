@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using RestWithASP_NET8Udemy.Business;
+using RestWithASP_NET8Udemy.Business.Implementations;
 using RestWithASP_NET8Udemy.Model.Context;
-using RestWithASP_NET8Udemy.Services;
-using RestWithASP_NET8Udemy.Services.Implementations;
+using RestWithASP_NET8Udemy.Repository;
+using RestWithASP_NET8Udemy.Repository.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,8 @@ builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connecti
 builder.Services.AddApiVersioning();
 
 // Dependency Injection
-builder.Services.AddScoped<IPersonService, PersonServiceImplementation>();
+builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
