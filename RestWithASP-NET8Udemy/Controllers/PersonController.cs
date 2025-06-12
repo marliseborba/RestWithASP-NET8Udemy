@@ -1,7 +1,7 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASP_NET8Udemy.Model;
-using RestWithASP_NET8Udemy.Services;
+using RestWithASP_NET8Udemy.Business;
 
 namespace RestWithASP_NET8Udemy.Controllers
 {
@@ -12,9 +12,9 @@ namespace RestWithASP_NET8Udemy.Controllers
     {
 
         private readonly ILogger<PersonController> _logger;
-        private IPersonService _personService;
+        private IPersonBusiness _personService;
 
-        public PersonController(ILogger<PersonController> logger, IPersonService personService)
+        public PersonController(ILogger<PersonController> logger, IPersonBusiness personService)
         {
             _logger = logger;
             _personService = personService;

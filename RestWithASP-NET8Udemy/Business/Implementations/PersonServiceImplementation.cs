@@ -2,13 +2,13 @@
 using RestWithASP_NET8Udemy.Model.Context;
 using System;
 
-namespace RestWithASP_NET8Udemy.Services.Implementations
+namespace RestWithASP_NET8Udemy.Business.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonBusinessImplementation : IPersonBusiness
     {
         private MySQLContext _context;
 
-        public PersonServiceImplementation(MySQLContext context)
+        public PersonBusinessImplementation(MySQLContext context)
         {   
             _context = context;
         }

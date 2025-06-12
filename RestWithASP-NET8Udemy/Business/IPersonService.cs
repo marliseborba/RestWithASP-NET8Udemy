@@ -1,8 +1,8 @@
 ﻿using RestWithASP_NET8Udemy.Model;
 
-namespace RestWithASP_NET8Udemy.Services
+namespace RestWithASP_NET8Udemy.Business
 {
-    public interface IPersonService
+    public interface IPersonBusiness
     {
         Person Create (Person person);
         Person FindById (long id);
