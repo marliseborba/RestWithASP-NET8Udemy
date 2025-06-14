@@ -1,9 +1,14 @@
+using EvolveDb;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
+using MySqlConnector;
 using RestWithASP_NET8Udemy.Business;
 using RestWithASP_NET8Udemy.Business.Implementations;
 using RestWithASP_NET8Udemy.Model.Context;
 using RestWithASP_NET8Udemy.Repository;
 using RestWithASP_NET8Udemy.Repository.Implementations;
+using Serilog;
+using System.Runtime.CompilerServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +17,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
 builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8,2))));
+
+if (builder.Environment.IsDevelopment())
+{
+    MigrateDatabase(connection);
+}
 
 // Versioning API
 builder.Services.AddApiVersioning();
@@ -40,3 +50,23 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void MigrateDatabase(string connection)
+{
+    try 
+    {
+        var evolveConnection = new MySqlConnection(connection);
+        var evolve = new Evolve(evolveConnection, Log.Information)
+        {
+            Locations = new List<string> { "db/migrations", "db/dataset" },
+            IsEraseDisabled = true,
+        };
+        evolve.Migrate();
+
+    }
+    catch (Exception ex)
+    {
+        Log.Error("Database migraton failed", ex);
+        throw;
+    }
+}
