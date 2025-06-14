@@ -2,8 +2,8 @@
 
 namespace RestWithASP_NET8Udemy.Model
 {
-    [Table("Books")]
-    public class Books
+    [Table("books")]
+    public class Book
     {
         [Column("id")]
         public long Id { get; set; }

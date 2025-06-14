@@ -4,48 +4,48 @@ using System;
 
 namespace RestWithASP_NET8Udemy.Repository.Implementations
 {
-    public class BooksRepositoryImplementation : IBooksRepository
+    public class BookRepositoryImplementation : IBookRepository
     {
         private MySQLContext _context;
 
-        public BooksRepositoryImplementation(MySQLContext context)
+        public BookRepositoryImplementation(MySQLContext context)
         {   
             _context = context;
         }
-        public List<Books> FindAll()
+        public List<Book> FindAll()
         {
             return _context.Books.ToList();
         }
 
-        public Books FindById(long id)
+        public Book FindById(long id)
         {
             return _context.Books.SingleOrDefault(p => p.Id.Equals(id));
         }
 
-        public Books Create(Books books)
+        public Book Create(Book book)
         {
             try
             {
-                _context.Add(books);
+                _context.Add(book);
                 _context.SaveChanges();
             }
             catch (Exception)
             {
                 throw;
             }
-            return books;
+            return book;
         }
-        public Books Update(Books books)
+        public Book Update(Book book)
         {
-            if (!Exists(books.Id))
+            if (!Exists(book.Id))
                 return null;
-            var result = _context.Books.SingleOrDefault(p => p.Id.Equals(books.Id));
+            var result = _context.Books.SingleOrDefault(p => p.Id.Equals(book.Id));
 
             if (result != null)
             {
                 try
                 {
-                    _context.Entry(result).CurrentValues.SetValues(books);
+                    _context.Entry(result).CurrentValues.SetValues(book);
                     _context.SaveChanges();
                 }
                 catch (Exception)
@@ -55,7 +55,7 @@ namespace RestWithASP_NET8Udemy.Repository.Implementations
                 }
             }
 
-            return books;
+            return book;
         }
 
         public void Delete(long id)

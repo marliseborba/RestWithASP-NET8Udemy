@@ -8,51 +8,51 @@ namespace RestWithASP_NET8Udemy.Controllers
     [ApiVersion("1.0")]
     [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
-    public class BooksController : ControllerBase
+    public class BookController : ControllerBase
     {
 
-        private readonly ILogger<BooksController> _logger;
-        private IBooksBusiness _booksBusiness;
+        private readonly ILogger<BookController> _logger;
+        private IBookBusiness _bookBusiness;
 
-        public BooksController(ILogger<BooksController> logger, IBooksBusiness booksBusiness)
+        public BookController(ILogger<BookController> logger, IBookBusiness bookBusiness)
         {
             _logger = logger;
-            _booksBusiness = booksBusiness;
+            _bookBusiness = bookBusiness;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            List<Books> books = _booksBusiness.FindAll();
+            List<Book> books = _bookBusiness.FindAll();
             return Ok(books);
         }
         
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var books = _booksBusiness.FindById(id);
+            var books = _bookBusiness.FindById(id);
             if (books == null) return NotFound();
             return Ok(books);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Books books)
+        public IActionResult Post([FromBody] Book books)
         {
             if (books == null) return BadRequest();
-            return Ok(_booksBusiness.Create(books));
+            return Ok(_bookBusiness.Create(books));
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Books books)
+        public IActionResult Put([FromBody] Book books)
         {
             if (books == null) return BadRequest();
-            return Ok(_booksBusiness.Update(books));
+            return Ok(_bookBusiness.Update(books));
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            _booksBusiness.Delete(id);
+            _bookBusiness.Delete(id);
             return NoContent();
         }
     }
