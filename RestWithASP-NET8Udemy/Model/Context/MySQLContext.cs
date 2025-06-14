@@ -13,6 +13,7 @@ namespace RestWithASP_NET8Udemy.Model.Context
         }
 
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Books> Books { get; set; }
 
     }
 }
