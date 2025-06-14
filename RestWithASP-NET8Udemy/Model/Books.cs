@@ -6,7 +6,7 @@ namespace RestWithASP_NET8Udemy.Model
     public class Books
     {
         [Column("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
         [Column("author")]
         public string Author { get; set; }
         [Column("launch_date")]
