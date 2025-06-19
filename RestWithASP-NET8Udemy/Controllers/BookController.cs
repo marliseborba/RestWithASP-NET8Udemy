@@ -2,6 +2,7 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASP_NET8Udemy.Model;
 using RestWithASP_NET8Udemy.Business;
+using RestWithASP_NET8Udemy.Data.VO;
 
 namespace RestWithASP_NET8Udemy.Controllers
 {
@@ -23,7 +24,7 @@ namespace RestWithASP_NET8Udemy.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Book> books = _bookBusiness.FindAll();
+            List<BookVO> books = _bookBusiness.FindAll();
             return Ok(books);
         }
         
@@ -36,14 +37,14 @@ namespace RestWithASP_NET8Udemy.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Book books)
+        public IActionResult Post([FromBody] BookVO books)
         {
             if (books == null) return BadRequest();
             return Ok(_bookBusiness.Create(books));
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Book books)
+        public IActionResult Put([FromBody] BookVO books)
         {
             if (books == null) return BadRequest();
             return Ok(_bookBusiness.Update(books));
