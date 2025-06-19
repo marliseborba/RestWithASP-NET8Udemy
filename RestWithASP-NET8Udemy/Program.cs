@@ -6,6 +6,7 @@ using RestWithASP_NET8Udemy.Business;
 using RestWithASP_NET8Udemy.Business.Implementations;
 using RestWithASP_NET8Udemy.Model.Context;
 using RestWithASP_NET8Udemy.Repository;
+using RestWithASP_NET8Udemy.Repository.Generic;
 using RestWithASP_NET8Udemy.Repository.Implementations;
 using Serilog;
 using System.Runtime.CompilerServices;
@@ -30,7 +31,7 @@ builder.Services.AddApiVersioning();
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
 builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-builder.Services.AddScoped<IBookRepository, BookRepositoryImplementation>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
