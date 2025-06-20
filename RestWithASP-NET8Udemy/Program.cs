@@ -1,5 +1,6 @@
 using EvolveDb;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using Microsoft.VisualBasic;
 using MySqlConnector;
 using RestWithASP_NET8Udemy.Business;
@@ -26,6 +27,14 @@ internal class Program
         {
             MigrateDatabase(connection);
         }
+
+        builder.Services.AddMvc(options =>
+        {
+            options.RespectBrowserAcceptHeader = true;
+            options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("applications/xml"));
+            options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("applications/json"));
+        })
+        .AddXmlSerializerFormatters();
 
         // Versioning API
         builder.Services.AddApiVersioning();
