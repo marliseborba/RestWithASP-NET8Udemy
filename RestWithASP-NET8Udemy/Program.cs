@@ -7,69 +7,74 @@ using RestWithASP_NET8Udemy.Business.Implementations;
 using RestWithASP_NET8Udemy.Model.Context;
 using RestWithASP_NET8Udemy.Repository;
 using RestWithASP_NET8Udemy.Repository.Generic;
-using RestWithASP_NET8Udemy.Repository.Implementations;
 using Serilog;
 using System.Runtime.CompilerServices;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
-builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8,2))));
-
-if (builder.Environment.IsDevelopment())
+internal class Program
 {
-    MigrateDatabase(connection);
-}
-
-// Versioning API
-builder.Services.AddApiVersioning();
-
-// Dependency Injection
-builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-
-builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-
-void MigrateDatabase(string connection)
-{
-    try 
+    private static void Main(string[] args)
     {
-        var evolveConnection = new MySqlConnection(connection);
-        var evolve = new Evolve(evolveConnection, Log.Information)
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+
+        builder.Services.AddControllers();
+        var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
+        builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 2))));
+
+        if (builder.Environment.IsDevelopment())
         {
-            Locations = new List<string> { "db/migrations", "db/dataset" },
-            IsEraseDisabled = true,
-        };
-        evolve.Migrate();
+            MigrateDatabase(connection);
+        }
 
-    }
-    catch (Exception ex)
-    {
-        Log.Error("Database migraton failed", ex);
-        throw;
+        // Versioning API
+        builder.Services.AddApiVersioning();
+
+        // Dependency Injection
+        builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+        builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
+
+        builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+        var app = builder.Build();
+
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
+
+        void MigrateDatabase(string connection)
+        {
+            try
+            {
+                var evolveConnection = new MySqlConnection(connection);
+                var evolve = new Evolve(evolveConnection, Log.Information)
+                {
+                    Locations = new List<string> { "db/migrations", "db/dataset" },
+                    IsEraseDisabled = true,
+                };
+                evolve.Migrate();
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Database migraton failed", ex);
+                throw;
+            }
+        }
     }
 }
