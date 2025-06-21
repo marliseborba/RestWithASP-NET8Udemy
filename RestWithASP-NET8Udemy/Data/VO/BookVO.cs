@@ -1,9 +1,9 @@
-﻿using RestWithASP_NET8Udemy.Model.Base;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using RestWithASP_NET8Udemy.Hypermedia;
+using RestWithASP_NET8Udemy.Hypermedia.Abstract;
 
 namespace RestWithASP_NET8Udemy.Data.VO
 {
-    public class BookVO
+    public class BookVO : ISupportsHyperMedia
     {
         public long Id { get; set; }
 
@@ -14,7 +14,6 @@ namespace RestWithASP_NET8Udemy.Data.VO
         public double Price { get; set; }
 
         public string Title { get; set; }
-
-
+        public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
     }
 }

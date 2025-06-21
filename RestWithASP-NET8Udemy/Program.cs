@@ -1,7 +1,6 @@
 using EvolveDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
-using Microsoft.VisualBasic;
 using MySqlConnector;
 using RestWithASP_NET8Udemy.Business;
 using RestWithASP_NET8Udemy.Business.Implementations;
@@ -11,7 +10,6 @@ using RestWithASP_NET8Udemy.Model.Context;
 using RestWithASP_NET8Udemy.Repository;
 using RestWithASP_NET8Udemy.Repository.Generic;
 using Serilog;
-using System.Runtime.CompilerServices;
 
 internal class Program
 {
@@ -40,6 +38,7 @@ internal class Program
 
         var filterOptions = new HyperMediaFilterOptions();
         filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+        filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
         
         builder.Services.AddSingleton(filterOptions);
 
@@ -70,7 +69,7 @@ internal class Program
         app.UseAuthorization();
 
         app.MapControllers();
-        app.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
+        app.MapControllerRoute("DefaultApi", "{controller=values}/v{version=apiVersion}/{id?}");
 
         app.Run();
 

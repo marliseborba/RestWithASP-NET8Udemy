@@ -1,8 +1,8 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using RestWithASP_NET8Udemy.Model;
 using RestWithASP_NET8Udemy.Business;
 using RestWithASP_NET8Udemy.Data.VO;
+using RestWithASP_NET8Udemy.Hypermedia.Filters;
 
 namespace RestWithASP_NET8Udemy.Controllers
 {
@@ -22,6 +22,7 @@ namespace RestWithASP_NET8Udemy.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             List<BookVO> books = _bookBusiness.FindAll();
@@ -29,6 +30,7 @@ namespace RestWithASP_NET8Udemy.Controllers
         }
         
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
             var books = _bookBusiness.FindById(id);
@@ -37,6 +39,7 @@ namespace RestWithASP_NET8Udemy.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] BookVO books)
         {
             if (books == null) return BadRequest();
@@ -44,6 +47,7 @@ namespace RestWithASP_NET8Udemy.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] BookVO books)
         {
             if (books == null) return BadRequest();
