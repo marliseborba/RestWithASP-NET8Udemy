@@ -7,10 +7,9 @@ namespace RestWithASP_NET8Udemy.Hypermedia.Enricher
 {
     public class PersonEnricher : ContentResponseEnricher<PersonVO>
     {
-        private readonly object _lock = new object();
         protected override Task EnrichModel(PersonVO content, IUrlHelper urlHelper)
         {
-            var path = "api/persons/v1";
+            var path = "api/person";
             string link = GetLink(content.Id, urlHelper, path);
 
             content.Links.Add(new HyperMediaLink()
@@ -41,14 +40,14 @@ namespace RestWithASP_NET8Udemy.Hypermedia.Enricher
                 Rel = RelationType.self,
                 Type = "int"
             });
-            return null;
+            return Task.CompletedTask;
         }
 
         private string GetLink(long id, IUrlHelper urlHelper, string path)
         {
-            lock (_lock)
+            lock (this)
             {
-                var url = new { controller = path, id = id };
+                var url = new { controller = path, id };
                 return new StringBuilder(urlHelper.Link("DefaultApi", url)).Replace("%2F", "/").ToString();
             }
         }

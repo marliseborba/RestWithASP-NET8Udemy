@@ -1,6 +1,5 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using RestWithASP_NET8Udemy.Model;
 using RestWithASP_NET8Udemy.Business;
 using RestWithASP_NET8Udemy.Data.VO;
 using RestWithASP_NET8Udemy.Hypermedia.Filters;

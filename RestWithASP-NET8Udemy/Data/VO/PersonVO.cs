@@ -1,6 +1,5 @@
 ﻿using RestWithASP_NET8Udemy.Hypermedia;
 using RestWithASP_NET8Udemy.Hypermedia.Abstract;
-using System.Text.Json.Serialization;
 
 namespace RestWithASP_NET8Udemy.Data.VO
 {
