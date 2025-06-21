@@ -5,6 +5,8 @@ using Microsoft.VisualBasic;
 using MySqlConnector;
 using RestWithASP_NET8Udemy.Business;
 using RestWithASP_NET8Udemy.Business.Implementations;
+using RestWithASP_NET8Udemy.Hypermedia.Enricher;
+using RestWithASP_NET8Udemy.Hypermedia.Filters;
 using RestWithASP_NET8Udemy.Model.Context;
 using RestWithASP_NET8Udemy.Repository;
 using RestWithASP_NET8Udemy.Repository.Generic;
@@ -36,6 +38,11 @@ internal class Program
         })
         .AddXmlSerializerFormatters();
 
+        var filterOptions = new HyperMediaFilterOptions();
+        filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+        
+        builder.Services.AddSingleton(filterOptions);
+
         // Versioning API
         builder.Services.AddApiVersioning();
 
@@ -63,6 +70,7 @@ internal class Program
         app.UseAuthorization();
 
         app.MapControllers();
+        app.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
 
         app.Run();
 

@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 
 namespace RestWithASP_NET8Udemy.Hypermedia
 {
-    public abstract class ContentResponseEnricher<T> : IResponseEnricher where T : ISupportHyperMedia
+    public abstract class ContentResponseEnricher<T> : IResponseEnricher where T : ISupportsHyperMedia
     {
         public ContentResponseEnricher()
         {
