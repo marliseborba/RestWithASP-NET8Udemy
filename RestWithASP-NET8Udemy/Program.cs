@@ -22,7 +22,7 @@ internal class Program
         var appVersion = "v1";
         var appDescription = $"API RESTful developed in course '{appName}'";
 
-        // Add services to the container.
+        builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
         builder.Services.AddControllers();
         var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
