@@ -24,7 +24,14 @@ internal class Program
 
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+        builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
+        {
+            builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        }
+        ));
+
         builder.Services.AddControllers();
+        
         var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
         builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 2))));
 
@@ -79,6 +86,8 @@ internal class Program
         var app = builder.Build();
 
         app.UseHttpsRedirection();
+
+        app.UseCors();
 
         app.UseSwagger();
         app.UseSwaggerUI(c => 
