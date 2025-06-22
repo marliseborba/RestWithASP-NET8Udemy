@@ -13,7 +13,6 @@
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/person/v1",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -23,7 +22,6 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/person/v1",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
