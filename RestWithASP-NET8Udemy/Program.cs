@@ -1,6 +1,8 @@
 using EvolveDb;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
 using MySqlConnector;
 using RestWithASP_NET8Udemy.Business;
 using RestWithASP_NET8Udemy.Business.Implementations;
@@ -16,6 +18,9 @@ internal class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        var appName = "REST API's From 0 to Azure with ASP.NET Core 5 and Docker";
+        var appVersion = "v1";
+        var appDescription = $"API RESTful developed in course '{appName}'";
 
         // Add services to the container.
 
@@ -45,6 +50,24 @@ internal class Program
         // Versioning API
         builder.Services.AddApiVersioning();
 
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc(appVersion,
+                new OpenApiInfo
+                {
+                    Title = appName,
+                    Version = appVersion,
+                    Description = appDescription,
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Marlise Borba",
+                        Url = new Uri("https://github.com/marliseborba")
+                    }
+                });
+
+        });
+
         // Dependency Injection
         builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
         builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
@@ -52,19 +75,20 @@ internal class Program
         builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
+     
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
         app.UseHttpsRedirection();
+
+        app.UseSwagger();
+        app.UseSwaggerUI(c => 
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{appName} - {appVersion}");
+        });
+
+        var option = new RewriteOptions();
+        option.AddRedirect("^$", "swagger");
+        app.UseRewriter(option);
 
         app.UseAuthorization();
 
