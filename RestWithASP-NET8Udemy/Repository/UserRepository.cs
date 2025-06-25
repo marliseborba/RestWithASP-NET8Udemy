@@ -1,6 +1,7 @@
 ﻿using RestWithASP_NET8Udemy.Data.VO;
 using RestWithASP_NET8Udemy.Model;
 using RestWithASP_NET8Udemy.Model.Context;
+using System.Data;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -19,6 +20,28 @@ namespace RestWithASP_NET8Udemy.Repository
         {
             var pass = ComputeHash(user.Password, SHA256.Create());
             return _context.Users.FirstOrDefault(u => (u.UserName == user.Username) && u.Password == pass);
+        }
+
+        public User RefreshUserInfo(User user)
+        {
+            if (!_context.Users.Any(u => u.Id.Equals(user.Id)))
+                return null;
+
+            var result = _context.Users.SingleOrDefault(p => p.Id.Equals(user.Id));
+            if (result != null)
+            {
+                try
+                {
+                    _context.Entry(result).CurrentValues.SetValues(user);
+                    _context.SaveChanges();
+                    return result;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return result;
         }
 
         private object ComputeHash(string input, HashAlgorithm hashAlgorithm)
