@@ -6,5 +6,6 @@ namespace RestWithASP_NET8Udemy.Repository
     public interface IUserRepository
     {
         User ValidadeCredentials(UserVO user);
+        User RefreshUserInfo(User user);
     }
 }

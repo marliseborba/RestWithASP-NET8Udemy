@@ -11,6 +11,8 @@ using RestWithASP_NET8Udemy.Hypermedia.Filters;
 using RestWithASP_NET8Udemy.Model.Context;
 using RestWithASP_NET8Udemy.Repository;
 using RestWithASP_NET8Udemy.Repository.Generic;
+using RestWithASP_NET8Udemy.Services;
+using RestWithASP_NET8Udemy.Services.Implementations;
 using Serilog;
 
 internal class Program
@@ -78,6 +80,11 @@ internal class Program
         // Dependency Injection
         builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
         builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
+        builder.Services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
+
+        builder.Services.AddTransient<ITokenService, TokenService>();
+
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
 
         builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
