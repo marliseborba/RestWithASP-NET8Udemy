@@ -22,6 +22,11 @@ namespace RestWithASP_NET8Udemy.Repository
             return _context.Users.FirstOrDefault(u => (u.UserName == user.Username) && u.Password == pass);
         }
 
+        public User ValidadeCredentials(string userName)
+        {
+            _context.Users.SingleOrDefault(u => u.UserName == userName);
+        }
+
         public User RefreshUserInfo(User user)
         {
             if (!_context.Users.Any(u => u.Id.Equals(user.Id)))

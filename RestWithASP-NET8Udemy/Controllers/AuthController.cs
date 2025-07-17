@@ -27,5 +27,16 @@ namespace RestWithASP_NET8Udemy.Controllers
             if (token == null) return Unauthorized();
             return Ok(token);
         }
+
+        [HttpPost]
+        [Route("refresh")]
+        public IActionResult Refresh([FromBody] TokenVO tokenVO)
+        {
+            if (tokenVO is null)
+                return BadRequest("Invalid client request");
+            var token = _loginBusiness.ValidateCredentials(tokenVO);
+            if (token == null) return BadRequest("Invalid client request");
+            return Ok(token);
+        }
     }
 }

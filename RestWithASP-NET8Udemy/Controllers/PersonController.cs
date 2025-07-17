@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASP_NET8Udemy.Business;
 using RestWithASP_NET8Udemy.Data.VO;
@@ -8,6 +9,7 @@ namespace RestWithASP_NET8Udemy.Controllers
 {
     [ApiVersion("1.0")]
     [ApiController]
+    [Authorize("Bearer")]
     [Route("api/[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
