@@ -9,6 +9,8 @@ namespace RestWithASP_NET8Udemy.Repository
 
         User ValidadeCredentials(string username);
 
+        bool RevokeToken(string username);
+
         User RefreshUserInfo(User user);
     }
 }

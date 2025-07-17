@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASP_NET8Udemy.Business;
 using RestWithASP_NET8Udemy.Data.VO;
@@ -32,11 +33,22 @@ namespace RestWithASP_NET8Udemy.Controllers
         [Route("refresh")]
         public IActionResult Refresh([FromBody] TokenVO tokenVO)
         {
-            if (tokenVO is null)
-                return BadRequest("Invalid client request");
+            if (tokenVO is null) return BadRequest("Invalid client request");
             var token = _loginBusiness.ValidateCredentials(tokenVO);
             if (token == null) return BadRequest("Invalid client request");
             return Ok(token);
+        }
+
+        [HttpGet]
+        [Route("revoke")]
+        [Authorize("Bearer")]
+        public IActionResult Revoke()
+        {
+            var username = User.Identity.Name;
+            var result = _loginBusiness.RevokeToken(username);
+            if (!result)
+                return BadRequest("Invalid client request");
+            return NoContent();
         }
     }
 }
