@@ -123,6 +123,7 @@ internal class Program
         builder.Services.AddTransient<ITokenService, TokenService>();
 
         builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
         builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 

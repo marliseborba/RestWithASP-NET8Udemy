@@ -25,6 +25,7 @@ namespace RestWithASP_NET8Udemy.Repository
                     throw;
                 }
             }
+
             return user;
         }
     }

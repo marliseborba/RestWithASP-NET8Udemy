@@ -16,7 +16,8 @@ namespace RestWithASP_NET8Udemy.Data.Converter.Implementations
                 FirstName = origin.FirstName,
                 LastName = origin.LastName,
                 Address = origin.Address,
-                Gender = origin.Gender
+                Gender = origin.Gender,
+                Enabled = origin.Enabled
             };
         }
 
@@ -30,7 +31,8 @@ namespace RestWithASP_NET8Udemy.Data.Converter.Implementations
                 FirstName = origin.FirstName,
                 LastName = origin.LastName,
                 Address = origin.Address,
-                Gender = origin.Gender
+                Gender = origin.Gender,
+                Enabled = origin.Enabled
             };
         }
         public List<Person> Parse(List<PersonVO> origin)
