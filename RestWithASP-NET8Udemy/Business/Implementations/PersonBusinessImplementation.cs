@@ -29,6 +29,11 @@ namespace RestWithASP_NET8Udemy.Business.Implementations
             return _converter.Parse(_repository.FindById(id));
         }
 
+        public List<PersonVO> FindByName(string firstName, string lastName)
+        {
+            return _converter.Parse(_repository.FindByName(firstName, lastName));
+        }
+
         public PersonVO Create(PersonVO person)
         {
             var personEntity = _converter.Parse(person);
