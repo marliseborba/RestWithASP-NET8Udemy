@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using RestWithASP_NET8Udemy.Data.Converter.Implementations;
+﻿using RestWithASP_NET8Udemy.Data.Converter.Implementations;
 using RestWithASP_NET8Udemy.Data.VO;
 using RestWithASP_NET8Udemy.Hypermedia.Utils;
-using RestWithASP_NET8Udemy.Model;
-using RestWithASP_NET8Udemy.Model.Context;
 using RestWithASP_NET8Udemy.Repository;
-using System;
 
 namespace RestWithASP_NET8Udemy.Business.Implementations
 {
@@ -33,12 +29,12 @@ namespace RestWithASP_NET8Udemy.Business.Implementations
 
             string query = @"select * from person p where 1 = 1 ";
             if (!string.IsNullOrWhiteSpace(name)) query += $" and p.first_name like '%{name}%' ";
-            query += $" order by p.first_name {sort} limit {offset} offset 1";
+            query += $" order by p.first_name {sort} limit {size} offset 1";
 
             string countQuery = @"select count(*) from person p where 1 = 1 ";
             if (!string.IsNullOrWhiteSpace(name)) countQuery += $" and p.first_name like '%{name}%' ";
 
-            if (!string.IsNullOrWhiteSpace(name)) countQuery += $" and p.name like '%{name}%' ";
+            if (!string.IsNullOrWhiteSpace(name)) countQuery += $" and p.first_name like '%{name}%' ";
 
             var persons = _repository.FindWithPagedSearch(query);
             int totalResults = _repository.GetCount(countQuery);

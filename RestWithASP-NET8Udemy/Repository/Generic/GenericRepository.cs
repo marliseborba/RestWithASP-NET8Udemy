@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestWithASP_NET8Udemy.Model;
 using RestWithASP_NET8Udemy.Model.Base;
 using RestWithASP_NET8Udemy.Model.Context;
-using System;
 
 namespace RestWithASP_NET8Udemy.Repository.Generic
 {
