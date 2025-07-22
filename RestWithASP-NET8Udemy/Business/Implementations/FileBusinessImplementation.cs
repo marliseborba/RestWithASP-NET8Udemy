@@ -4,13 +4,13 @@ namespace RestWithASP_NET8Udemy.Business.Implementations
 {
     public class FileBusinessImplementation : IFileBusiness
     {
-        private readonly string basePath;
+        private readonly string _basePath;
         private readonly IHttpContextAccessor _context;
 
         public FileBusinessImplementation(IHttpContextAccessor context)
         {
             _context = context;
-            basePath = Directory.GetCurrentDirectory() + "\\UploadDir\\";
+            _basePath = Directory.GetCurrentDirectory() + "\\UploadDir\\";
         }
 
         public byte[] GetFile(string filename)
@@ -29,7 +29,10 @@ namespace RestWithASP_NET8Udemy.Business.Implementations
                 var docName = Path.GetFileName(file.FileName);
                 if (file != null && file.Length > 0)
                 {
-                    var destination = Path.Combine(baseUrl + "/api/file/v1/" + fileDetail.DocumentName);
+                    var destination = Path.Combine(_basePath, "", docName);
+                    fileDetail.DocumentName = docName;
+                    fileDetail.DocType = fileType;
+                    fileDetail.DocUrl = Path.Combine(baseUrl + "/api/file/v1/" + fileDetail.DocumentName);
 
                     using var stream = new FileStream(destination, FileMode.Create);
                     await file.CopyToAsync(stream);
@@ -38,9 +41,14 @@ namespace RestWithASP_NET8Udemy.Business.Implementations
             return fileDetail;
         }
 
-        public Task<List<FileDetailVO>> SaveFilesToDisk(IList<IFormFile> file)
+        public async Task<List<FileDetailVO>> SaveFilesToDisk(IList<IFormFile> files)
         {
-            throw new NotImplementedException();
+            List<FileDetailVO> list = new List<FileDetailVO>();
+            foreach (var file in files)
+            {
+                list.Add(await SaveFileToDisk(file));
+            }
+            return list;
         }
     }
 }
