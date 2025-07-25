@@ -1,0 +1,38 @@
+services:
+  db: 
+    environment:
+      MYSQL_ROOT_PASSWORD: docker
+      MYSQL_USER: root
+      MYSQL_PASSWORD: docker
+      MYSQL_DATABASE: rest_with_asp_net_udemy
+      TZ: America/Sao_Paulo
+    image: rest-with-asp-net-8-udemy-db
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
+    build:
+      context: .
+      dockerfile: db/Dockerfile
+    ports:
+      - 3308:3306
+    networks:
+      - udemy-network
+      
+  rest-with-asp-net-8-udemy:
+    image: rest-with-asp-net-8-udemy
+    build:
+      context: .
+      dockerfile: RestWithASP-NET8Udemy/Dockerfile
+    environment:
+      TZ: America/Sao_Paulo
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - 44300:8080
+    depends_on:
+      db:
+        condition: service_started      
+    networks:
+      - udemy-network
+networks:
+  udemy-network:
+    driver: bridge
+      

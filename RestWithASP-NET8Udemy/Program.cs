@@ -75,10 +75,10 @@ internal class Program
         var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
         builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 2))));
 
-        if (builder.Environment.IsDevelopment())
+        /*if (builder.Environment.IsDevelopment())
         {
             MigrateDatabase(connection);
-        }
+        }*/
 
         builder.Services.AddMvc(options =>
         {
