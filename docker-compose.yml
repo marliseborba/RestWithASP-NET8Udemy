@@ -1,8 +1,10 @@
+version: '3.4'
+
 services:
   db: 
     environment:
       MYSQL_ROOT_PASSWORD: docker
-      MYSQL_USER: root
+      MYSQL_USER: docker
       MYSQL_PASSWORD: docker
       MYSQL_DATABASE: rest_with_asp_net_udemy
       TZ: America/Sao_Paulo
