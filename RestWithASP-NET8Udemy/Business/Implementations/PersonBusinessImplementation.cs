@@ -34,8 +34,6 @@ namespace RestWithASP_NET8Udemy.Business.Implementations
             string countQuery = @"select count(*) from person p where 1 = 1 ";
             if (!string.IsNullOrWhiteSpace(name)) countQuery += $" and p.first_name like '%{name}%' ";
 
-            if (!string.IsNullOrWhiteSpace(name)) countQuery += $" and p.first_name like '%{name}%' ";
-
             var persons = _repository.FindWithPagedSearch(query);
             int totalResults = _repository.GetCount(countQuery);
 

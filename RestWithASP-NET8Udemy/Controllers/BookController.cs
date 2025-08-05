@@ -23,14 +23,17 @@ namespace RestWithASP_NET8Udemy.Controllers
             _bookBusiness = bookBusiness;
         }
 
-        [HttpGet]
+        [HttpGet("{sortDirection}/{pageSize}/{page}")]
+        [ProducesResponseType((200), Type = typeof(List<BookVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] string? title, string? sortDirection, int pageSize, int page)
         {
-            List<BookVO> books = _bookBusiness.FindAll();
-            return Ok(books);
+            return Ok(_bookBusiness.FindWithPagedSearch(title, sortDirection, pageSize, page));
         }
-        
+
         [HttpGet("{id}")]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
@@ -38,6 +41,19 @@ namespace RestWithASP_NET8Udemy.Controllers
             var books = _bookBusiness.FindById(id);
             if (books == null) return NotFound();
             return Ok(books);
+        }
+
+        [HttpGet("findBookByName")]
+        [ProducesResponseType((200), Type = typeof(BookVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Get([FromQuery] string title)
+        {
+            var book = _bookBusiness.FindByName(title);
+            if (book == null)
+                return NotFound();
+            return Ok(book);
         }
 
         [HttpPost]

@@ -127,6 +127,7 @@ internal class Program
 
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+        builder.Services.AddScoped<IBookRepository, BookRepository>();
 
         builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
